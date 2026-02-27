@@ -1,51 +1,80 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Patient</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Medicine System - Patient Portal</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+    <div class="container">
+        <header>
+            <h1>Smart Medicine Request & Inventory System</h1>
+            <div class="nav-links">
+                <a href="/">Admin Dashboard</a>
+                <a href="/patient">Patient Portal</a>
+            </div>
+        </header>
 
-<h2>Request Medicine</h2>
+        <div id="messageContainer"></div>
 
-<input id="name" placeholder="Patient Name"><br><br>
-<input id="medicine" placeholder="Medicine Name"><br><br>
-<input id="qty" type="number" placeholder="Quantity"><br><br>
+        <section id="requestMedicineSection">
+            <h2>Request Medicine</h2>
+            <form id="requestMedicineForm">
+                <div class="form-group">
+                    <label for="patientName">Patient Name</label>
+                    <input type="text" id="patientName" required>
+                </div>
+                <div class="form-group">
+                    <label for="medicineName">Medicine Name</label>
+                    <input type="text" id="medicineName" required>
+                </div>
+                <div class="form-group">
+                    <label for="quantity">Quantity</label>
+                    <input type="number" id="quantity" min="1" required>
+                </div>
+                <button type="submit">Submit Request</button>
+            </form>
+        </section>
 
-<button onclick="sendRequest()">Submit Request</button>
+        <section id="myRequests">
+            <h2>My Requests</h2>
+            <div class="table-container">
+                <table id="requestsTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Medicine</th>
+                            <th>Quantity</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="requestsTableBody">
+                        <!-- Requests will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
 
-<p id="msg"></p>
+    <!-- Chatbot -->
+    <button id="chatbotToggle" class="chatbot-toggle">💬</button>
+    
+    <div id="chatbotContainer" class="chatbot-container hidden">
+        <div class="chatbot-header">
+            <h3>Medicine Assistant</h3>
+            <button id="closeChatbot" class="close-btn">&times;</button>
+        </div>
+        <div id="chatMessages" class="chat-messages">
+            <div class="message bot">Hello! I'm your medicine assistant. Ask me about medications, dosages, or general health tips!</div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="Type your question...">
+            <button id="sendMessage">Send</button>
+        </div>
+    </div>
 
-<script>
-async function sendRequest() {
-
-const patientName =
-document.getElementById("name").value;
-
-const medicineName =
-document.getElementById("medicine").value;
-
-const quantity =
-document.getElementById("qty").value;
-
-const res = await fetch("/api/add-request", {
-method: "POST",
-headers: {
-"Content-Type": "application/json"
-},
-body: JSON.stringify({
-patientName,
-medicineName,
-quantity
-})
-});
-
-const data = await res.json();
-
-document.getElementById("msg").innerText =
-data.message;
-}
-</script>
-
+    <script src="patient.js"></script>
 </body>
 </html>

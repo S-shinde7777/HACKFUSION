@@ -1,90 +1,144 @@
-const express = require("express");
+const express = require('express');
+const fs = require('fs').promises;
+const path = require('path');
 const router = express.Router();
-const fs = require("fs");
-const path = require("path");
 
-const requestsFile = path.join(__dirname, "../data/requests.json");
-const medicinesFile = path.join(__dirname, "../data/medicines.json");
+const requestsFile = path.join(__dirname, '../data/requests.json');
+const medicinesFile = path.join(__dirname, '../data/medicines.json');
 
-// Add Request
-router.post("/add-request", (req, res) => {
-  const { patientName, medicineName, quantity } = req.body;
+// Helper function to read requests
+async function readRequests() {
+    try {
+        const data = await fs.readFile(requestsFile, 'utf8');
+        return JSON.parse(data);
+    } catch (error) {
+        return [];
+    }
+}
 
-  const requests = JSON.parse(fs.readFileSync(requestsFile));
+// Helper function to write requests
+async function writeRequests(requests) {
+    await fs.writeFile(requestsFile, JSON.stringify(requests, null, 2));
+}
 
-  const newRequest = {
-    id: Date.now(),
-    patientName,
-    medicineName,
-    quantity,
-    status: "pending"
-  };
+// Helper function to read medicines
+async function readMedicines() {
+    try {
+        const data = await fs.readFile(medicinesFile, 'utf8');
+        return JSON.parse(data);
+    } catch (error) {
+        return [];
+    }
+}
 
-  requests.push(newRequest);
+// Helper function to write medicines
+async function writeMedicines(medicines) {
+    await fs.writeFile(medicinesFile, JSON.stringify(medicines, null, 2));
+}
 
-  fs.writeFileSync(requestsFile, JSON.stringify(requests, null, 2));
-
-  res.json({ message: "Request submitted successfully" });
+// GET /api/requests - Get all requests
+router.get('/requests', async (req, res) => {
+    try {
+        const requests = await readRequests();
+        res.json(requests);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to read requests' });
+    }
 });
 
-// Get All Requests
-router.get("/requests", (req, res) => {
-  const requests = JSON.parse(fs.readFileSync(requestsFile));
-  res.json(requests);
+// POST /api/add-request - Submit new medicine request
+router.post('/add-request', async (req, res) => {
+    try {
+        const { patientName, medicineName, quantity } = req.body;
+        
+        if (!patientName || !medicineName || !quantity) {
+            return res.status(400).json({ error: 'All fields are required' });
+        }
+
+        const requests = await readRequests();
+        
+        // Generate new ID
+        const newId = requests.length > 0 ? Math.max(...requests.map(r => r.id)) + 1 : 1;
+        
+        const newRequest = {
+            id: newId,
+            patientName,
+            medicineName,
+            quantity: parseInt(quantity),
+            status: 'pending',
+            requestDate: new Date().toISOString()
+        };
+        
+        requests.push(newRequest);
+        await writeRequests(requests);
+        
+        res.status(201).json({ message: 'Request submitted successfully', request: newRequest });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to submit request' });
+    }
 });
 
-// ACCEPT REQUEST
-router.post("/accept-request/:id", (req, res) => {
-  const requestId = parseInt(req.params.id);
-
-  const requests = JSON.parse(fs.readFileSync(requestsFile));
-  const medicines = JSON.parse(fs.readFileSync(medicinesFile));
-
-  const request = requests.find(r => r.id === requestId);
-
-  if (!request) {
-    return res.status(404).json({ message: "Request not found" });
-  }
-
-  const medicine = medicines.find(m => m.name === request.medicineName);
-
-  if (!medicine) {
-    return res.status(404).json({ message: "Medicine not found" });
-  }
-
-  if (medicine.stock < request.quantity) {
-    return res.status(400).json({ message: "Not enough stock" });
-  }
-
-  // Deduct Stock
-  medicine.stock -= request.quantity;
-
-  // Change Status
-  request.status = "accepted";
-
-  fs.writeFileSync(requestsFile, JSON.stringify(requests, null, 2));
-  fs.writeFileSync(medicinesFile, JSON.stringify(medicines, null, 2));
-
-  res.json({ message: "Request accepted and stock updated" });
+// POST /api/accept-request/:id - Accept request and deduct stock
+router.post('/accept-request/:id', async (req, res) => {
+    try {
+        const requestId = parseInt(req.params.id);
+        
+        const requests = await readRequests();
+        const medicines = await readMedicines();
+        
+        const requestIndex = requests.findIndex(r => r.id === requestId);
+        if (requestIndex === -1) {
+            return res.status(404).json({ error: 'Request not found' });
+        }
+        
+        const request = requests[requestIndex];
+        
+        // Find medicine
+        const medicineIndex = medicines.findIndex(m => m.name.toLowerCase() === request.medicineName.toLowerCase());
+        if (medicineIndex === -1) {
+            return res.status(404).json({ error: 'Medicine not found in inventory' });
+        }
+        
+        // Check stock
+        if (medicines[medicineIndex].stock < request.quantity) {
+            return res.status(400).json({ error: 'Insufficient stock' });
+        }
+        
+        // Deduct stock
+        medicines[medicineIndex].stock -= request.quantity;
+        
+        // Update request status
+        requests[requestIndex].status = 'accepted';
+        
+        // Save both files
+        await writeMedicines(medicines);
+        await writeRequests(requests);
+        
+        res.json({ message: 'Request accepted successfully' });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to accept request' });
+    }
 });
 
-// REJECT REQUEST
-router.post("/reject-request/:id", (req, res) => {
-  const requestId = parseInt(req.params.id);
-
-  const requests = JSON.parse(fs.readFileSync(requestsFile));
-
-  const request = requests.find(r => r.id === requestId);
-
-  if (!request) {
-    return res.status(404).json({ message: "Request not found" });
-  }
-
-  request.status = "rejected";
-
-  fs.writeFileSync(requestsFile, JSON.stringify(requests, null, 2));
-
-  res.json({ message: "Request rejected" });
+// POST /api/reject-request/:id - Reject request
+router.post('/reject-request/:id', async (req, res) => {
+    try {
+        const requestId = parseInt(req.params.id);
+        
+        const requests = await readRequests();
+        
+        const requestIndex = requests.findIndex(r => r.id === requestId);
+        if (requestIndex === -1) {
+            return res.status(404).json({ error: 'Request not found' });
+        }
+        
+        requests[requestIndex].status = 'rejected';
+        await writeRequests(requests);
+        
+        res.json({ message: 'Request rejected successfully' });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to reject request' });
+    }
 });
 
 module.exports = router;

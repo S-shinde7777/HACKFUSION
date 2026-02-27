@@ -1,16 +1,26 @@
 [
   {
-    "id": 1771436566715,
-    "patientName": "Rahul shinde",
-    "medicineName": "crocine 650",
+    "id": 1,
+    "patientName": "John Doe",
+    "medicineName": "Paracetamol",
     "quantity": 2,
-    "status": "accepted"
+    "status": "rejected",
+    "requestDate": "2024-01-15T10:30:00.000Z"
   },
   {
-    "id": 1772215020986,
-    "patientName": "prajkta",
+    "id": 2,
+    "patientName": "Jane Smith",
+    "medicineName": "Amoxicillin",
+    "quantity": 1,
+    "status": "accepted",
+    "requestDate": "2024-01-14T15:45:00.000Z"
+  },
+  {
+    "id": 3,
+    "patientName": "sagar",
     "medicineName": "nicip",
-    "quantity": "2",
-    "status": "rejected"
+    "quantity": 2,
+    "status": "pending",
+    "requestDate": "2026-02-27T21:33:56.750Z"
   }
 ]
