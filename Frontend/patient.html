@@ -9,10 +9,10 @@
 <body>
     <div class="container">
         <header>
-            <h1>Smart Medicine Request & Inventory System</h1>
-            <div class="nav-links">
-                <a href="/">Admin Dashboard</a>
-                <a href="/patient">Patient Portal</a>
+            <h1>Smart Medicine System - Patient Portal</h1>
+            <div class="user-info">
+                <span id="userDisplay"></span>
+                <a href="./login.html" class="logout-btn">Logout</a>
             </div>
         </header>
 
@@ -23,7 +23,7 @@
             <form id="requestMedicineForm">
                 <div class="form-group">
                     <label for="patientName">Patient Name</label>
-                    <input type="text" id="patientName" required>
+                    <input type="text" id="patientName" readonly required>
                 </div>
                 <div class="form-group">
                     <label for="medicineName">Medicine Name</label>

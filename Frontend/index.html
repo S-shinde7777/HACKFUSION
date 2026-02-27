@@ -1,84 +1,635 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Medicine System - Admin Dashboard</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>Smart Medicine Request & Inventory System</h1>
-            <div class="nav-links">
-                <a href="/">Admin Dashboard</a>
-                <a href="/patient">Patient Portal</a>
-            </div>
-        </header>
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Pharmacy Assistant</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    * { font-family: 'Sora', sans-serif; }
+    
+    .hero-gradient {
+      background: linear-gradient(135deg, #0a0f1a 0%, #0d1929 25%, #0f2744 50%, #0a192f 75%, #050a15 100%);
+    }
+    
+    .glow-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      animation: float 8s ease-in-out infinite;
+    }
+    
+    .orb-1 {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(0, 212, 170, 0.4) 0%, transparent 70%);
+      top: -100px;
+      right: -100px;
+      animation-delay: 0s;
+    }
+    
+    .orb-2 {
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.35) 0%, transparent 70%);
+      bottom: 10%;
+      left: -50px;
+      animation-delay: -3s;
+    }
+    
+    .orb-3 {
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.3) 0%, transparent 70%);
+      top: 40%;
+      right: 20%;
+      animation-delay: -5s;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(20px, -30px) scale(1.05); }
+      50% { transform: translate(-10px, 20px) scale(0.95); }
+      75% { transform: translate(30px, 10px) scale(1.02); }
+    }
+    
+    .pill-3d {
+      transform-style: preserve-3d;
+      animation: pillFloat 6s ease-in-out infinite;
+    }
+    
+    @keyframes pillFloat {
+      0%, 100% { transform: rotateX(15deg) rotateY(0deg) translateY(0); }
+      50% { transform: rotateX(15deg) rotateY(180deg) translateY(-20px); }
+    }
+    
+    .capsule {
+      position: relative;
+      width: 120px;
+      height: 50px;
+      transform-style: preserve-3d;
+      animation: capsuleRotateThenBurst 6s ease-in-out forwards;
+    }
+    
+    @keyframes capsuleRotateThenBurst {
+      0% { 
+        transform: rotateX(20deg) rotateY(0deg) rotateZ(15deg) scale(1);
+        opacity: 1;
+      }
+      70% { 
+        transform: rotateX(20deg) rotateY(180deg) rotateZ(15deg) scale(1);
+        opacity: 1;
+      }
+      85% {
+        transform: rotateX(20deg) rotateY(360deg) rotateZ(15deg) scale(1.2);
+        opacity: 0.8;
+      }
+      100% { 
+        transform: rotateX(20deg) rotateY(360deg) rotateZ(15deg) scale(0.3);
+        opacity: 0;
+      }
+    }
+    
+    .capsule-half {
+      position: absolute;
+      width: 60px;
+      height: 50px;
+      border-radius: 25px 0 0 25px;
+      box-shadow: inset -10px 0 20px rgba(0,0,0,0.3);
+    }
+    
+    .capsule-left {
+      left: 0;
+      background: linear-gradient(135deg, #00d4aa 0%, #00a88a 100%);
+      animation: burstLeft 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) 4.5s forwards;
+    }
+    
+    .capsule-right {
+      right: 0;
+      border-radius: 0 25px 25px 0;
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+      animation: burstRight 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) 4.5s forwards;
+    }
+    
+    @keyframes burstLeft {
+      0% { transform: translateX(0) scale(1); opacity: 1; }
+      100% { transform: translateX(-80px) translateY(60px) scale(0); opacity: 0; }
+    }
+    
+    @keyframes burstRight {
+      0% { transform: translateX(0) scale(1); opacity: 1; }
+      100% { transform: translateX(80px) translateY(60px) scale(0); opacity: 0; }
+    }
+    
+    .particle {
+      position: absolute;
+      pointer-events: none;
+    }
+    
+    .particle-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #fbbf24;
+      box-shadow: 0 0 12px rgba(251, 191, 36, 0.8);
+    }
+    
+    .particle-1 { animation: particleFloat 3s ease-out 4.5s forwards; }
+    .particle-2 { animation: particleFloat 3s ease-out 4.6s forwards; }
+    .particle-3 { animation: particleFloat 3s ease-out 4.7s forwards; }
+    .particle-4 { animation: particleFloat 3s ease-out 4.8s forwards; }
+    .particle-5 { animation: particleFloat 3s ease-out 4.9s forwards; }
+    .particle-6 { animation: particleFloat 3s ease-out 5s forwards; }
+    .particle-7 { animation: particleFloat 3s ease-out 5.1s forwards; }
+    .particle-8 { animation: particleFloat 3s ease-out 5.2s forwards; }
+    .particle-9 { animation: particleFloat 3s ease-out 5.3s forwards; }
+    .particle-10 { animation: particleFloat 3s ease-out 5.4s forwards; }
+    .particle-11 { animation: particleFloat 3s ease-out 5.5s forwards; }
+    .particle-12 { animation: particleFloat 3s ease-out 5.6s forwards; }
+    
+    @keyframes particleFloat {
+      0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--tx), var(--ty)) scale(0);
+        opacity: 0;
+      }
+    }
+    
+    .dna-helix {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      animation: dnaRotate 20s linear infinite;
+    }
+    
+    @keyframes dnaRotate {
+      0% { transform: rotateY(0deg); }
+      100% { transform: rotateY(360deg); }
+    }
+    
+    .dna-strand {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+    
+    .feature-card {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .feature-card:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(0, 212, 170, 0.4);
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 25px 50px -12px rgba(0, 212, 170, 0.25);
+    }
+    
+    .cta-button {
+      background: linear-gradient(135deg, #00d4aa 0%, #00a88a 50%, #00c49a 100%);
+      background-size: 200% 200%;
+      animation: gradientShift 3s ease infinite;
+      transition: all 0.3s ease;
+    }
+    
+    .cta-button:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 20px 40px -10px rgba(0, 212, 170, 0.5);
+    }
+    
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    
+    .molecule {
+      position: absolute;
+      animation: moleculeFloat 12s ease-in-out infinite;
+    }
+    
+    @keyframes moleculeFloat {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      33% { transform: translate(30px, -20px) rotate(120deg); }
+      66% { transform: translate(-20px, 30px) rotate(240deg); }
+    }
+    
+    .hex-grid {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0.05;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%2300d4aa' fill-opacity='1'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    
+    .stagger-1 { animation-delay: 0.1s; }
+    .stagger-2 { animation-delay: 0.2s; }
+    .stagger-3 { animation-delay: 0.3s; }
+    .stagger-4 { animation-delay: 0.4s; }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .animate-in {
+      animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      opacity: 0;
+    }
+    
+    .text-gradient {
+      background: linear-gradient(135deg, #00d4aa 0%, #38bdf8 50%, #a855f7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .ai-pulse {
+      animation: aiPulse 3s ease-in-out infinite;
+    }
+    
+    @keyframes aiPulse {
+      0%, 100% { 
+        box-shadow: 0 0 0 0 rgba(0, 212, 170, 0.4),
+                    0 0 0 0 rgba(56, 189, 248, 0.2);
+      }
+      50% { 
+        box-shadow: 0 0 0 20px rgba(0, 212, 170, 0),
+                    0 0 0 40px rgba(56, 189, 248, 0);
+      }
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full">
+  <div id="app-wrapper" class="h-full w-full hero-gradient relative overflow-auto">
+   <!-- Background Elements -->
+   <div class="hex-grid"></div>
+   <div class="glow-orb orb-1"></div>
+   <div class="glow-orb orb-2"></div>
+   <div class="glow-orb orb-3"></div><!-- Floating Molecules -->
+   <div class="molecule" style="top: 15%; left: 10%;">
+    <svg width="60" height="60" viewbox="0 0 60 60" fill="none">
+     <circle cx="30" cy="15" r="8" fill="rgba(0, 212, 170, 0.3)" /> <circle cx="15" cy="45" r="8" fill="rgba(56, 189, 248, 0.3)" /> <circle cx="45" cy="45" r="8" fill="rgba(168, 85, 247, 0.3)" /> <line x1="30" y1="15" x2="15" y2="45" stroke="rgba(255,255,255,0.2)" stroke-width="2" /> <line x1="30" y1="15" x2="45" y2="45" stroke="rgba(255,255,255,0.2)" stroke-width="2" /> <line x1="15" y1="45" x2="45" y2="45" stroke="rgba(255,255,255,0.2)" stroke-width="2" />
+    </svg>
+   </div>
+   <div class="molecule" style="bottom: 20%; right: 8%; animation-delay: -4s;">
+    <svg width="80" height="80" viewbox="0 0 80 80" fill="none">
+     <circle cx="40" cy="20" r="10" fill="rgba(0, 212, 170, 0.25)" /> <circle cx="20" cy="60" r="10" fill="rgba(56, 189, 248, 0.25)" /> <circle cx="60" cy="60" r="10" fill="rgba(168, 85, 247, 0.25)" /> <circle cx="40" cy="50" r="6" fill="rgba(255, 255, 255, 0.2)" /> <line x1="40" y1="20" x2="40" y2="50" stroke="rgba(255,255,255,0.15)" stroke-width="2" /> <line x1="40" y1="50" x2="20" y2="60" stroke="rgba(255,255,255,0.15)" stroke-width="2" /> <line x1="40" y1="50" x2="60" y2="60" stroke="rgba(255,255,255,0.15)" stroke-width="2" />
+    </svg>
+   </div><!-- Main Content -->
+   <div class="relative z-10 min-h-full flex flex-col">
+    <!-- Navigation -->
+    <nav class="flex items-center justify-between px-6 md:px-12 py-6 animate-in">
+     <div class="flex items-center gap-3">
+      <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center ai-pulse">
+       <svg class="w-7 h-7 text-white" fill="none" viewbox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+       </svg>
+      </div><span class="text-white text-xl font-semibold tracking-tight">PharmaAI</span>
+     </div>
+     <div class="hidden md:flex items-center gap-8">
+      <a href="#" class="text-slate-400 hover:text-white transition-colors text-sm font-medium">Features</a> <a href="#" class="text-slate-400 hover:text-white transition-colors text-sm font-medium">How it Works</a> <a href="#" class="text-slate-400 hover:text-white transition-colors text-sm font-medium">About</a> <button class="px-5 py-2.5 rounded-full border border-emerald-400/30 text-emerald-400 text-sm font-medium hover:bg-emerald-400/10 transition-all"> Sign In </button>
+     </div>
+    </nav><!-- Hero Section -->
+    <main class="flex-1 flex items-center px-6 md:px-12 py-12">
+     <div class="w-full max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+      <!-- Left Content -->
+      <div class="space-y-8">
+       <!-- Hero image -->
+       <div class="animate-in stagger-1">
+        <img id="hero-image" src="assets/hero.jpg" alt="Hero graphic" class="w-full h-auto rounded-lg mb-6 hidden lg:block" />
+       </div>
+       <div class="animate-in stagger-1">
+        <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-400/10 border border-emerald-400/20 text-emerald-400 text-sm font-medium mb-6"> <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> AI-Powered Healthcare </span>
+        <h1 id="main-title" class="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">Your Personal <span class="text-gradient">AI Pharmacy</span> Assistant</h1>
+       </div>
+       <p id="subtitle" class="animate-in stagger-2 text-lg md:text-xl text-slate-400 leading-relaxed max-w-xl">Experience the future of pharmaceutical care with intelligent medication management, drug interactions analysis, and personalized health insights.</p>
+       <div class="animate-in stagger-3 flex flex-wrap gap-4">
+        <a href="./login.html"<button id="cta-button" class="cta-button px-8 py-4 rounded-full text-white font-semibold text-lg shadow-2xl"> Get Started Free </button></a>
+       </div><!-- Stats -->
+       <div class="animate-in stagger-4 flex flex-wrap gap-8 pt-8 border-t border-slate-800">
+        <div>
+         <div class="text-3xl font-bold text-white">
+          80%
+         </div>
+         <div class="text-slate-500 text-sm">
+          Users
+         </div>
+        </div>
+        <div>
+         <div class="text-3xl font-bold text-white">
+          24/7
+         </div>
+         <div class="text-slate-500 text-sm">
+          AI Support
+         </div>
+        </div>
+       </div>
+      </div><!-- Right - 3D Visual -->
+      <div class="relative flex items-center justify-center min-h-[400px] lg:min-h-[500px]">
+       <!-- Particle Container -->
+       <div id="particle-container" class="absolute inset-0"></div><!-- Central 3D Capsule -->
+       <div class="relative" style="perspective: 1000px;">
+        <div class="capsule" style="transform-style: preserve-3d;">
+         <div class="capsule-half capsule-left"></div>
+         <div class="capsule-half capsule-right"></div>
+        </div>
+       </div><!-- Orbiting Elements -->
+       <div class="absolute inset-0 dna-helix" style="animation-duration: 15s;">
+        <div class="dna-strand bg-emerald-400" style="top: 20%; left: 50%;"></div>
+        <div class="dna-strand bg-sky-400" style="top: 35%; left: 70%; animation-delay: 0.3s;"></div>
+        <div class="dna-strand bg-purple-400" style="top: 50%; left: 80%; animation-delay: 0.6s;"></div>
+        <div class="dna-strand bg-emerald-400" style="top: 65%; left: 70%; animation-delay: 0.9s;"></div>
+        <div class="dna-strand bg-sky-400" style="top: 80%; left: 50%; animation-delay: 1.2s;"></div>
+        <div class="dna-strand bg-purple-400" style="top: 65%; left: 30%; animation-delay: 1.5s;"></div>
+        <div class="dna-strand bg-emerald-400" style="top: 50%; left: 20%; animation-delay: 1.8s;"></div>
+        <div class="dna-strand bg-sky-400" style="top: 35%; left: 30%; animation-delay: 2.1s;"></div>
+       </div><!-- Feature Cards -->
+       <div id="feature-1" class="feature-card absolute top-0 left-0 md:left-4 px-4 py-3 rounded-2xl animate-in stagger-1">
+        <div class="flex items-center gap-3">
+         <div class="w-10 h-10 rounded-xl bg-emerald-400/20 flex items-center justify-center">
+          <svg class="w-5 h-5 text-emerald-400" fill="none" viewbox="0 0 24 24" stroke="currentColor">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+         </div>
+         <div>
+          <div class="text-white text-sm font-medium">
+           Drug Interactions
+          </div>
+          <div class="text-slate-500 text-xs">
+           Real-time analysis
+          </div>
+         </div>
+        </div>
+       </div>
+       <div id="feature-2" class="feature-card absolute top-1/4 right-0 md:right-4 px-4 py-3 rounded-2xl animate-in stagger-2">
+        <div class="flex items-center gap-3">
+         <div class="w-10 h-10 rounded-xl bg-sky-400/20 flex items-center justify-center">
+          <svg class="w-5 h-5 text-sky-400" fill="none" viewbox="0 0 24 24" stroke="currentColor">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+         </div>
+         <div>
+          <div class="text-white text-sm font-medium">
+           Dose Reminders
+          </div>
+          <div class="text-slate-500 text-xs">
+           Smart scheduling
+          </div>
+         </div>
+        </div>
+       </div>
+       <div id="feature-3" class="feature-card absolute bottom-8 left-1/2 -translate-x-1/2 px-4 py-3 rounded-2xl animate-in stagger-3">
+        <div class="flex items-center gap-3">
+         <div class="w-10 h-10 rounded-xl bg-purple-400/20 flex items-center justify-center">
+          <svg class="w-5 h-5 text-purple-400" fill="none" viewbox="0 0 24 24" stroke="currentColor">
+           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+          </svg>
+         </div>
+         <div>
+          <div class="text-white text-sm font-medium">
+           AI Health Insights
+          </div>
+          <div class="text-slate-500 text-xs">
+           Personalized advice
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </main>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      main_title: 'Your Personal <span class="text-gradient">AI Pharmacy</span> Assistant',
+      subtitle: 'Experience the future of pharmaceutical care with intelligent medication management, drug interactions analysis, and personalized health insights.',
+      cta_button: 'Get Started Free',
+      hero_image: 'assets/hero.jpg',
+      feature_1: 'Drug Interactions',
+      feature_2: 'Dose Reminders',
+      feature_3: 'AI Health Insights',
+      background_color: '#0a0f1a',
+      primary_color: '#00d4aa',
+      text_color: '#ffffff',
+      secondary_text_color: '#94a3b8',
+      accent_color: '#38bdf8',
+      font_family: 'Sora',
+      font_size: 16
+    };
 
-        <div id="messageContainer"></div>
+    // Create particles when page loads
+    function createParticles() {
+  const container = document.getElementById('particle-container');
+  if (!container) return;
 
-        <section id="addMedicineSection">
-            <h2>Add New Medicine</h2>
-            <form id="addMedicineForm">
-                <div class="form-group">
-                    <label for="medicineName">Medicine Name</label>
-                    <input type="text" id="medicineName" required>
-                </div>
-                <div class="form-group">
-                    <label for="stock">Stock Quantity</label>
-                    <input type="number" id="stock" min="0" required>
-                </div>
-                <div class="form-group checkbox-group">
-                    <input type="checkbox" id="prescriptionRequired">
-                    <label for="prescriptionRequired">Prescription Required</label>
-                </div>
-                <button type="submit">Add Medicine</button>
-            </form>
-        </section>
+  container.innerHTML = "";
 
-        <section id="medicinesList">
-            <h2>Medicine Inventory</h2>
-            <div class="table-container">
-                <table id="medicinesTable">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Medicine Name</th>
-                            <th>Stock</th>
-                            <th>Prescription Required</th>
-                        </tr>
-                    </thead>
-                    <tbody id="medicinesTableBody">
-                        <!-- Medicines will be loaded here -->
-                    </tbody>
-                </table>
-            </div>
-        </section>
+  const particleCount = 180;
 
-        <section id="requestsList">
-            <h2>Patient Requests</h2>
-            <div class="table-container">
-                <table id="requestsTable">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Patient Name</th>
-                            <th>Medicine</th>
-                            <th>Quantity</th>
-                            <th>Status</th>
-                            <th>Date</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="requestsTableBody">
-                        <!-- Requests will be loaded here -->
-                    </tbody>
-                </table>
-            </div>
-        </section>
-    </div>
+  for (let i = 0; i < particleCount; i++) {
 
-    <script src="admin.js"></script>
-</body>
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+
+    const size = Math.random() * 6 + 4; // random size
+    particle.style.width = size + 'px';
+    particle.style.height = size + 'px';
+    particle.style.borderRadius = '50%';
+
+    particle.style.background = 'radial-gradient(circle, #fff176, #facc15)';
+    particle.style.boxShadow = '0 0 15px #facc15, 0 0 30px #f59e0b';
+
+    particle.style.position = 'absolute';
+    particle.style.left = '50%';
+    particle.style.top = '50%';
+
+    const angle = Math.random() * Math.PI * 2;
+    const distance = Math.random() * 400 + 150;
+
+    const tx = Math.cos(angle) * distance;
+    const ty = Math.sin(angle) * distance;
+
+    particle.animate([
+      { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
+      { transform: `translate(${tx}px, ${ty}px) scale(0.3)`, opacity: 0 }
+    ], {
+      duration: 1800,
+      easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)'
+    });
+
+    container.appendChild(particle);
+  }
+}
+
+    async function onConfigChange(config) {
+      // Update main title
+      const titleEl = document.getElementById('main-title');
+      if (titleEl) {
+        titleEl.innerHTML = config.main_title || defaultConfig.main_title;
+      }
+      
+      // Update subtitle
+      const subtitleEl = document.getElementById('subtitle');
+      if (subtitleEl) {
+        subtitleEl.textContent = config.subtitle || defaultConfig.subtitle;
+      }
+      
+      // Update CTA button
+      const ctaEl = document.getElementById('cta-button');
+      if (ctaEl) {
+        ctaEl.textContent = config.cta_button || defaultConfig.cta_button;
+      }
+      
+      // Update hero image
+      const heroImgEl = document.getElementById('hero-image');
+      if (heroImgEl && config.hero_image) {
+        heroImgEl.src = config.hero_image;
+      }
+      
+      // Update feature cards
+      const feature1El = document.getElementById('feature-1');
+      if (feature1El) {
+        const textEl = feature1El.querySelector('.text-white');
+        if (textEl) textEl.textContent = config.feature_1 || defaultConfig.feature_1;
+      }
+      
+      const feature2El = document.getElementById('feature-2');
+      if (feature2El) {
+        const textEl = feature2El.querySelector('.text-white');
+        if (textEl) textEl.textContent = config.feature_2 || defaultConfig.feature_2;
+      }
+      
+      const feature3El = document.getElementById('feature-3');
+      if (feature3El) {
+        const textEl = feature3El.querySelector('.text-white');
+        if (textEl) textEl.textContent = config.feature_3 || defaultConfig.feature_3;
+      }
+      
+      // Apply colors
+      const primaryColor = config.primary_color || defaultConfig.primary_color;
+      const textColor = config.text_color || defaultConfig.text_color;
+      const bgColor = config.background_color || defaultConfig.background_color;
+      const secondaryTextColor = config.secondary_text_color || defaultConfig.secondary_text_color;
+      const accentColor = config.accent_color || defaultConfig.accent_color;
+      
+      document.documentElement.style.setProperty('--primary-color', primaryColor);
+      
+      // Apply font
+      const fontFamily = config.font_family || defaultConfig.font_family;
+      document.body.style.fontFamily = `${fontFamily}, sans-serif`;
+      
+      // Apply font size
+      const baseSize = config.font_size || defaultConfig.font_size;
+      if (titleEl) titleEl.style.fontSize = `${baseSize * 3}px`;
+      if (subtitleEl) subtitleEl.style.fontSize = `${baseSize * 1.25}px`;
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => {
+              config.background_color = value;
+              window.elementSdk.setConfig({ background_color: value });
+            }
+          },
+          {
+            get: () => config.secondary_text_color || defaultConfig.secondary_text_color,
+            set: (value) => {
+              config.secondary_text_color = value;
+              window.elementSdk.setConfig({ secondary_text_color: value });
+            }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => {
+              config.text_color = value;
+              window.elementSdk.setConfig({ text_color: value });
+            }
+          },
+          {
+            get: () => config.primary_color || defaultConfig.primary_color,
+            set: (value) => {
+              config.primary_color = value;
+              window.elementSdk.setConfig({ primary_color: value });
+            }
+          },
+          {
+            get: () => config.accent_color || defaultConfig.accent_color,
+            set: (value) => {
+              config.accent_color = value;
+              window.elementSdk.setConfig({ accent_color: value });
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => config.font_family || defaultConfig.font_family,
+          set: (value) => {
+            config.font_family = value;
+            window.elementSdk.setConfig({ font_family: value });
+          }
+        },
+        fontSizeable: {
+          get: () => config.font_size || defaultConfig.font_size,
+          set: (value) => {
+            config.font_size = value;
+            window.elementSdk.setConfig({ font_size: value });
+          }
+        }
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ['main_title', config.main_title || defaultConfig.main_title],
+        ['subtitle', config.subtitle || defaultConfig.subtitle],
+        ['cta_button', config.cta_button || defaultConfig.cta_button],
+        ['feature_1', config.feature_1 || defaultConfig.feature_1],
+        ['feature_2', config.feature_2 || defaultConfig.feature_2],
+        ['feature_3', config.feature_3 || defaultConfig.feature_3],
+        ['hero_image', config.hero_image || defaultConfig.hero_image]
+      ]);
+    }
+
+    // Initialize particles on load
+    createParticles();
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9d49f51e13739a72',t:'MTc3MjIxOTE2Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

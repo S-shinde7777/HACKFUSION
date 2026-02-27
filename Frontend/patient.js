@@ -1,6 +1,28 @@
 // API Base URL
 const API_BASE = 'http://localhost:3000/api';
 
+// Check authentication
+window.addEventListener('load', () => {
+    const user = sessionStorage.getItem('user');
+    if (!user) {
+        window.location.href = '/login.html';
+        return;
+    }
+    
+    const userData = JSON.parse(user);
+    if (userData.role !== 'patient') {
+        window.location.href = '/login.html';
+        return;
+    }
+    
+    // Display user name
+    document.getElementById('userDisplay').textContent = `Welcome, ${userData.name}`;
+    document.getElementById('patientName').value = userData.name;
+    
+    // Load requests
+    loadRequests(userData.name);
+});
+
 // Show message function
 function showMessage(message, type) {
     const container = document.getElementById('messageContainer');
@@ -10,36 +32,27 @@ function showMessage(message, type) {
     }, 5000);
 }
 
-// Load requests for current patient (using patient name from session)
-async function loadRequests() {
-    // In a real app, you'd have patient authentication
-    // For demo, we'll show all requests and filter by name entered in form
+// Load requests for current patient
+async function loadRequests(patientName) {
     try {
-        const response = await fetch(`${API_BASE}/requests`);
+        const response = await fetch(`${API_BASE}/requests/patient/${encodeURIComponent(patientName)}`);
         const requests = await response.json();
         
         const tbody = document.getElementById('requestsTableBody');
         tbody.innerHTML = '';
         
-        // Get last used patient name from session storage
-        const currentPatient = sessionStorage.getItem('currentPatient');
-        
-        if (currentPatient) {
-            const patientRequests = requests.filter(r => r.patientName === currentPatient);
+        requests.forEach(request => {
+            const row = tbody.insertRow();
+            const statusClass = `status-${request.status}`;
             
-            patientRequests.forEach(request => {
-                const row = tbody.insertRow();
-                const statusClass = `status-${request.status}`;
-                
-                row.innerHTML = `
-                    <td>${request.id}</td>
-                    <td>${request.medicineName}</td>
-                    <td>${request.quantity}</td>
-                    <td><span class="${statusClass}">${request.status}</span></td>
-                    <td>${new Date(request.requestDate).toLocaleDateString()}</td>
-                `;
-            });
-        }
+            row.innerHTML = `
+                <td>${request.id}</td>
+                <td>${request.medicineName}</td>
+                <td>${request.quantity}</td>
+                <td><span class="${statusClass}">${request.status}</span></td>
+                <td>${new Date(request.requestDate).toLocaleDateString()}</td>
+            `;
+        });
     } catch (error) {
         showMessage('Error loading requests', 'error');
     }
@@ -49,9 +62,10 @@ async function loadRequests() {
 document.getElementById('requestMedicineForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     
-    const patientName = document.getElementById('patientName').value;
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    
     const requestData = {
-        patientName: patientName,
+        patientName: user.name,
         medicineName: document.getElementById('medicineName').value,
         quantity: document.getElementById('quantity').value
     };
@@ -70,12 +84,10 @@ document.getElementById('requestMedicineForm').addEventListener('submit', async 
         if (response.ok) {
             showMessage('Request submitted successfully', 'success');
             document.getElementById('requestMedicineForm').reset();
-            
-            // Save patient name to session storage
-            sessionStorage.setItem('currentPatient', patientName);
+            document.getElementById('patientName').value = user.name; // Restore patient name
             
             // Reload requests
-            loadRequests();
+            loadRequests(user.name);
         } else {
             showMessage(data.error || 'Error submitting request', 'error');
         }
@@ -143,8 +155,10 @@ function addMessageToChat(message, sender) {
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
-// Initial load
-loadRequests();
-
 // Refresh data every 30 seconds
-setInterval(loadRequests, 30000);
+setInterval(() => {
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    if (user) {
+        loadRequests(user.name);
+    }
+}, 30000);

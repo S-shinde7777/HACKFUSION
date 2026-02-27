@@ -1,26 +1,18 @@
 [
   {
     "id": 1,
-    "patientName": "John Doe",
+    "patientName": "John Patient",
     "medicineName": "Paracetamol",
-    "quantity": 2,
-    "status": "rejected",
-    "requestDate": "2024-01-15T10:30:00.000Z"
+    "quantity": 50,
+    "status": "accepted",
+    "requestDate": "2026-02-27T22:43:44.502Z"
   },
   {
     "id": 2,
-    "patientName": "Jane Smith",
-    "medicineName": "Amoxicillin",
+    "patientName": "John Patient",
+    "medicineName": "paracetamol",
     "quantity": 1,
     "status": "accepted",
-    "requestDate": "2024-01-14T15:45:00.000Z"
-  },
-  {
-    "id": 3,
-    "patientName": "sagar",
-    "medicineName": "nicip",
-    "quantity": 2,
-    "status": "pending",
-    "requestDate": "2026-02-27T21:33:56.750Z"
+    "requestDate": "2026-02-27T22:52:59.742Z"
   }
 ]

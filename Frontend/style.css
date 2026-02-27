@@ -30,6 +30,32 @@ header {
 
 header h1 {
     margin: 0;
+    font-size: 1.5rem;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-info span {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+}
+
+.logout-btn {
+    background-color: #dc2626;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+    background-color: #b91c1c;
 }
 
 .nav-links {
@@ -198,6 +224,49 @@ tr:hover {
     border: 1px solid #bee5eb;
 }
 
+/* Login Page Styles */
+.login-container {
+    max-width: 400px;
+    margin: 100px auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.login-container h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #667eea;
+}
+
+.login-container .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.login-container button {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+}
+
+.demo-credentials {
+    margin-top: 2rem;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.demo-credentials h3 {
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.demo-credentials p {
+    margin-bottom: 0.25rem;
+}
+
 /* Chatbot Styles */
 .chatbot-container {
     position: fixed;
@@ -243,20 +312,20 @@ tr:hover {
     background-color: #f9f9f9;
 }
 
-.message {
+.chat-messages .message {
     margin-bottom: 1rem;
     padding: 0.75rem;
     border-radius: 8px;
     max-width: 80%;
 }
 
-.message.user {
+.chat-messages .message.user {
     background-color: #667eea;
     color: white;
     margin-left: auto;
 }
 
-.message.bot {
+.chat-messages .message.bot {
     background-color: #e9ecef;
     color: #333;
     margin-right: auto;

@@ -30,7 +30,7 @@ router.get('/medicines', async (req, res) => {
     }
 });
 
-// POST /api/add-medicine - Add new medicine
+// POST /api/add-medicine - Add new medicine (pharmacist only)
 router.post('/add-medicine', async (req, res) => {
     try {
         const { name, stock, prescriptionRequired } = req.body;

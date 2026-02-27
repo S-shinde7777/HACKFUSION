@@ -2,7 +2,7 @@
   {
     "id": 1,
     "name": "Paracetamol",
-    "stock": 100,
+    "stock": 44,
     "prescriptionRequired": false
   },
   {
@@ -15,6 +15,12 @@
     "id": 3,
     "name": "Ibuprofen",
     "stock": 75,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 4,
+    "name": "paracetamol",
+    "stock": 2,
     "prescriptionRequired": false
   }
 ]

@@ -20,24 +20,19 @@ app.use(express.static(path.join(__dirname, 'Frontend')));
 const medicineRoutes = require('./routes/medicineRoutes');
 const requestRoutes = require('./routes/requestRoutes');
 const aiRoutes = require('./routes/aiRoutes');
+const authRoutes = require('./routes/authRoutes');
 
 app.use('/api', medicineRoutes);
 app.use('/api', requestRoutes);
 app.use('/api', aiRoutes);
+app.use('/api', authRoutes);
 
-// Root route - serve admin dashboard
+// Root route - redirect to login
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'Frontend', 'index.html'));
-});
-
-// Patient route
-app.get('/patient', (req, res) => {
-    res.sendFile(path.join(__dirname, 'Frontend', 'patient.html'));
+    res.redirect('./login.html');
 });
 
 // Start server
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-    console.log(`Admin Dashboard: http://localhost:${PORT}`);
-    console.log(`Patient Portal: http://localhost:${PORT}/patient`);
+    console.log(`Login Page: http://localhost:${PORT}`);
 });

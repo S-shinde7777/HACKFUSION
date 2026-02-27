@@ -1,6 +1,28 @@
 // API Base URL
 const API_BASE = 'http://localhost:3000/api';
 
+// Check authentication
+window.addEventListener('load', () => {
+    const user = sessionStorage.getItem('user');
+    if (!user) {
+        window.location.href = '/login.html';
+        return;
+    }
+    
+    const userData = JSON.parse(user);
+    if (userData.role !== 'pharmacist') {
+        window.location.href = '/login.html';
+        return;
+    }
+    
+    // Display user name
+    document.getElementById('userDisplay').textContent = `Welcome, ${userData.name}`;
+    
+    // Load data
+    loadMedicines();
+    loadRequests();
+});
+
 // Show message function
 function showMessage(message, type) {
     const container = document.getElementById('messageContainer');
@@ -139,10 +161,6 @@ document.getElementById('addMedicineForm').addEventListener('submit', async (e) 
         showMessage('Error adding medicine', 'error');
     }
 });
-
-// Initial load
-loadMedicines();
-loadRequests();
 
 // Refresh data every 30 seconds
 setInterval(() => {

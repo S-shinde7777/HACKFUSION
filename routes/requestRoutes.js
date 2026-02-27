@@ -46,6 +46,18 @@ router.get('/requests', async (req, res) => {
     }
 });
 
+// GET /api/requests/patient/:name - Get requests by patient name
+router.get('/requests/patient/:name', async (req, res) => {
+    try {
+        const patientName = req.params.name;
+        const requests = await readRequests();
+        const patientRequests = requests.filter(r => r.patientName === patientName);
+        res.json(patientRequests);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to read requests' });
+    }
+});
+
 // POST /api/add-request - Submit new medicine request
 router.post('/add-request', async (req, res) => {
     try {
