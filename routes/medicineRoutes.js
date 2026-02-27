@@ -27,8 +27,26 @@ router.post("/add-medicine", (req, res) => {
 
 // Get All Medicines
 router.get("/medicines", (req, res) => {
-  const medicines = JSON.parse(fs.readFileSync(medicinesFile));
-  res.json(medicines);
+
+  const medicines =
+  JSON.parse(fs.readFileSync(medicinesFile));
+
+  const updatedMedicines = medicines.map(med => {
+
+    if (med.stock <= 10) {
+      return {
+        ...med,
+        lowStock: true
+      };
+    }
+
+    return {
+      ...med,
+      lowStock: false
+    };
+  });
+
+  res.json(updatedMedicines);
 });
 
 module.exports = router;

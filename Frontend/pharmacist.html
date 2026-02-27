@@ -57,8 +57,34 @@ await fetch(`/api/reject-request/${id}`,
 {method:"POST"});
 loadRequests();
 }
+async function loadMedicines(){
 
+const res = await fetch("/api/medicines");
+const data = await res.json();
+
+let html = "";
+
+data.forEach(m => {
+
+html += `
+<p>
+${m.name} - Stock: ${m.stock}
+
+${m.lowStock ?
+"<span style='color:red'>⚠ LOW STOCK</span>"
+: ""}
+
+</p>
+`;
+});
+
+document.getElementById("medicines").innerHTML =
+html;
+}
 </script>
+<h2>Medicine Inventory</h2>
+<button onclick="loadMedicines()">Load Medicines</button>
 
+<div id="medicines"></div>
 </body>
 </html>
