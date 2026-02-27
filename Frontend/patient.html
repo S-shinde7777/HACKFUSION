@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Patient</title>
+</head>
+
+<body>
+
+<h2>Request Medicine</h2>
+
+<input id="name" placeholder="Patient Name"><br><br>
+<input id="medicine" placeholder="Medicine Name"><br><br>
+<input id="qty" type="number" placeholder="Quantity"><br><br>
+
+<button onclick="sendRequest()">Submit Request</button>
+
+<p id="msg"></p>
+
+<script>
+async function sendRequest() {
+
+const patientName =
+document.getElementById("name").value;
+
+const medicineName =
+document.getElementById("medicine").value;
+
+const quantity =
+document.getElementById("qty").value;
+
+const res = await fetch("/api/add-request", {
+method: "POST",
+headers: {
+"Content-Type": "application/json"
+},
+body: JSON.stringify({
+patientName,
+medicineName,
+quantity
+})
+});
+
+const data = await res.json();
+
+document.getElementById("msg").innerText =
+data.message;
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Pharmacist</title>
+</head>
+
+<body>
+
+<h2>Requests</h2>
+
+<button onclick="loadRequests()">Refresh</button>
+
+<div id="requests"></div>
+
+<script>
+
+async function loadRequests() {
+
+const res = await fetch("/api/requests");
+const data = await res.json();
+
+let html = "";
+
+data.forEach(r => {
+
+html += `
+<p>
+${r.patientName} wants
+${r.medicineName}
+(${r.quantity})
+
+<button onclick="accept(${r.id})">
+Accept
+</button>
+
+<button onclick="reject(${r.id})">
+Reject
+</button>
+
+Status: ${r.status}
+</p>
+`;
+});
+
+document.getElementById("requests").innerHTML =
+html;
+}
+
+async function accept(id){
+await fetch(`/api/accept-request/${id}`,
+{method:"POST"});
+loadRequests();
+}
+
+async function reject(id){
+await fetch(`/api/reject-request/${id}`,
+{method:"POST"});
+loadRequests();
+}
+
+</script>
+
+</body>
+</html>
