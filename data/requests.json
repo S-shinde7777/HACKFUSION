@@ -26,9 +26,17 @@
   {
     "id": 4,
     "patientName": "Karan Patient",
-    "medicineName": "paracetamol",
+    "medicineName": "nicip",
     "quantity": 4,
+    "status": "rejected",
+    "requestDate": "2026-02-28T12:34:26.848Z"
+  },
+  {
+    "id": 5,
+    "patientName": "viki Patient",
+    "medicineName": "nicip",
+    "quantity": 2,
     "status": "accepted",
-    "requestDate": "2026-02-28T04:38:36.553Z"
+    "requestDate": "2026-02-28T21:34:31.483Z"
   }
 ]

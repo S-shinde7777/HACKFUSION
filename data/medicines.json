@@ -2,7 +2,7 @@
   {
     "id": 1,
     "name": "Paracetamol",
-    "stock": 40,
+    "stock": 35,
     "prescriptionRequired": false
   },
   {
@@ -21,6 +21,18 @@
     "id": 4,
     "name": "paracetamol",
     "stock": 40,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 5,
+    "name": "nicip",
+    "stock": 48,
+    "prescriptionRequired": true
+  },
+  {
+    "id": 6,
+    "name": "viks",
+    "stock": 10,
     "prescriptionRequired": false
   }
 ]
