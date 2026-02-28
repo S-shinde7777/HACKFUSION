@@ -2,7 +2,7 @@
   {
     "id": 1,
     "name": "Paracetamol",
-    "stock": 44,
+    "stock": 40,
     "prescriptionRequired": false
   },
   {
@@ -20,7 +20,7 @@
   {
     "id": 4,
     "name": "paracetamol",
-    "stock": 2,
+    "stock": 40,
     "prescriptionRequired": false
   }
 ]

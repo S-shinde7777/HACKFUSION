@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "patientName": "John Patient",
+    "patientName": "Prajkta Patient",
     "medicineName": "Paracetamol",
     "quantity": 50,
     "status": "accepted",
@@ -9,7 +9,7 @@
   },
   {
     "id": 2,
-    "patientName": "John Patient",
+    "patientName": "Tushar Patient",
     "medicineName": "paracetamol",
     "quantity": 1,
     "status": "accepted",
@@ -17,10 +17,18 @@
   },
   {
     "id": 3,
-    "patientName": "John Patient",
+    "patientName": "Sagar Patient",
     "medicineName": "bp",
     "quantity": 5,
     "status": "rejected",
     "requestDate": "2026-02-28T02:44:00.371Z"
+  },
+  {
+    "id": 4,
+    "patientName": "Karan Patient",
+    "medicineName": "paracetamol",
+    "quantity": 4,
+    "status": "accepted",
+    "requestDate": "2026-02-28T04:38:36.553Z"
   }
 ]

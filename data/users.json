@@ -3,21 +3,14 @@
     "id": 1,
     "username": "patient1",
     "password": "patient123",
-    "name": "John Patient",
+    "name": "Karan Patient",
     "role": "patient"
   },
   {
     "id": 2,
-    "username": "patient2",
-    "password": "patient123",
-    "name": "Sarah Patient",
-    "role": "patient"
-  },
-  {
-    "id": 3,
     "username": "pharmacist1",
     "password": "pharma123",
-    "name": "Mike Pharmacist",
+    "name": "Kirti Pharmacist",
     "role": "pharmacist"
   }
 ]
