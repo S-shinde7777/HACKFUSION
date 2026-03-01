@@ -69,11 +69,14 @@
             <button id="closeChatbot" class="close-btn">&times;</button>
         </div>
         <div id="chatMessages" class="chat-messages">
-            <div class="message bot">Hello! I'm your medicine assistant. Ask me about medications, dosages, or general health tips!</div>
+            <div class="message bot">Hello! I'm your medicine assistant powered by a conversation agent. Ask me about medications, dosages, or general health tips. You can also issue commands like <code>add medicine name=aspirin stock=100 prescriptionRequired=false</code>.</div>
         </div>
         <div class="chat-input">
-            <input type="text" id="chatInput" placeholder="Type your question...">
+            <input type="text" id="chatInput" placeholder="Type your question or command...">
             <button id="sendMessage">Send</button>
+        </div>
+        <div class="chat-help">
+            <small>Tip: you can add a medicine via chat using <code>add medicine name=&lt;name&gt; stock=&lt;number&gt; prescriptionRequired=&lt;true|false&gt;</code>.</small>
         </div>
     </div>
 

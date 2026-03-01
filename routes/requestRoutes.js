@@ -59,6 +59,7 @@ router.get('/requests/patient/:name', async (req, res) => {
 });
 
 // POST /api/add-request - Submit new medicine request
+// If the requested medicine is in stock, automatically accept and deduct inventory.
 router.post('/add-request', async (req, res) => {
     try {
         const { patientName, medicineName, quantity } = req.body;
@@ -68,21 +69,37 @@ router.post('/add-request', async (req, res) => {
         }
 
         const requests = await readRequests();
+        const medicines = await readMedicines();
         
         // Generate new ID
         const newId = requests.length > 0 ? Math.max(...requests.map(r => r.id)) + 1 : 1;
         
+        const reqQuantity = parseInt(quantity);
+        let status = 'pending';
+
+        // attempt to auto‑accept based on stock
+        const medIndex = medicines.findIndex(m => m.name.toLowerCase() === medicineName.toLowerCase());
+        if (medIndex !== -1 && medicines[medIndex].stock >= reqQuantity) {
+            status = 'accepted';
+            medicines[medIndex].stock -= reqQuantity;
+        }
+
         const newRequest = {
             id: newId,
             patientName,
             medicineName,
-            quantity: parseInt(quantity),
-            status: 'pending',
+            quantity: reqQuantity,
+            status,
             requestDate: new Date().toISOString()
         };
         
         requests.push(newRequest);
+
+        // write updates
         await writeRequests(requests);
+        if (status === 'accepted') {
+            await writeMedicines(medicines);
+        }
         
         res.status(201).json({ message: 'Request submitted successfully', request: newRequest });
     } catch (error) {
