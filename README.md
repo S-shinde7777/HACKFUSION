@@ -29,6 +29,20 @@ The `/api/chat` endpoint in `routes/aiRoutes.js` now delegates to the conversati
 
 Additionally, the patient request workflow has been enhanced: when a patient submits a request via `/api/add-request`, the server checks medicine stock. If sufficient inventory exists for the requested quantity, the request is automatically marked `accepted` and the medicine stock is decremented. Otherwise the request remains `pending` for pharmacist review.
 
+## Price & Stock Management
+
+- Each medicine record now contains `stock` and `price` fields.
+- The pharmacist dashboard displays both columns and includes an "Edit" button that allows updating stock, price, name, and prescription requirement.
+- The `POST /api/add-medicine` route accepts `price` as well as `name`, `stock`, and `prescriptionRequired`.
+- A new route `PUT /api/medicines/:id` can be used programmatically to update a medicine.
+
+## Importing Products
+
+- Place an Excel file (`products-export.xlsx`, `product_export.xlsx`, `products-export.xlsx`, etc.) in the `data/` directory; the first sheet should contain headers such as `product id`, `product name`, `price rec`, and optionally `stock`.
+- Call `POST /api/import-products` to import the spreadsheet into `medicines.json`. Existing stock values are preserved when medicines match by ID or name.
+- The import maps the price column and any available stock; unmatched stock defaults to 0.
+
+
 The front end can continue to post to `/api/chat` as before; the logic is now more modular.
 
 ## Extending

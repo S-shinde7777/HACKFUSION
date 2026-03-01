@@ -1,38 +1,366 @@
 [
   {
-    "id": 1,
-    "name": "Paracetamol",
-    "stock": 19,
+    "id": 16066,
+    "name": "Panthenol Spray, 46,3 mg/g Schaum zur Anwendung auf der Haut",
+    "stock": 45,
+    "price": 16.95,
     "prescriptionRequired": false
   },
   {
-    "id": 2,
-    "name": "Amoxicillin",
+    "id": 976308,
+    "name": "NORSAN Omega-3 Total",
+    "stock": 78,
+    "price": 27,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 977179,
+    "name": "NORSAN Omega-3 Vegan",
+    "stock": 90,
+    "price": 29,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 993687,
+    "name": "NORSAN Omega-3 Kapseln",
+    "stock": 9,
+    "price": 29,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 1225428,
+    "name": "Vividrin® iso EDO® antiallergische Augentropfen",
+    "stock": 76,
+    "price": 8.28,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 202796,
+    "name": "Aqualibra 80 mg/90 mg/180 mg Filmtabletten",
+    "stock": 87,
+    "price": 27.82,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 1103035,
+    "name": "Vitasprint Pro Energie",
+    "stock": 45,
+    "price": 15.95,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 27955,
+    "name": "Cystinol akut®",
+    "stock": 45,
+    "price": 26.5,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 30955,
+    "name": "Cromo-ratiopharm® Augentropfen Einzeldosis",
+    "stock": 33,
+    "price": 7.59,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 1162261,
+    "name": "Kijimea Reizdarm PRO",
+    "stock": 100,
+    "price": 38.99,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 1204782,
+    "name": "Mucosolvan 1 mal täglich Retardkapseln",
+    "stock": 345,
+    "price": 39.97,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 1210016,
+    "name": "OMNi-BiOTiC SR-9 mit B-Vitaminen",
+    "stock": 987,
+    "price": 44.5,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 1245942,
+    "name": "Osa Schorf Spray",
+    "stock": 666,
+    "price": 15.45,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 1247528,
+    "name": "Multivitamin Fruchtgummibärchen vegan u zuckerfrei",
+    "stock": 76,
+    "price": 12.74,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 1273105,
+    "name": "Iberogast® Classic, Flüssigkeit zum Einnehmen",
+    "stock": 54,
+    "price": 28.98,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 1358905,
+    "name": "COLPOFIX®",
+    "stock": 564,
+    "price": 49.6,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 1293377,
+    "name": "Augentropfen RedCare",
+    "stock": 2,
+    "price": 12.69,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 1313639,
+    "name": "MULTILAC Darmsynbiotikum",
+    "stock": 123,
+    "price": 9.99,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 1319766,
+    "name": "SAW PALMETO (SÄGEPALME) 350 mg",
     "stock": 50,
-    "prescriptionRequired": true
-  },
-  {
-    "id": 3,
-    "name": "Ibuprofen",
-    "stock": 75,
+    "price": 8.47,
     "prescriptionRequired": false
   },
   {
-    "id": 4,
-    "name": "paracetamol",
+    "id": 1329121,
+    "name": "Paracetamol apodiscounter 500 mg Tabletten",
+    "stock": 80,
+    "price": 2.06,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 1352774,
+    "name": "Prostata Men Kapseln",
+    "stock": 90,
+    "price": 19.99,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 1357649,
+    "name": "Natural Intimate Creme",
+    "stock": 60,
+    "price": 18.9,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 1358513,
+    "name": "proBIO 6 Probiotik Kapseln APOMIA",
+    "stock": 70,
+    "price": 34.9,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 1363580,
+    "name": "Eucerin DERMOPURE Triple Effect Reinigungsgel",
     "stock": 40,
+    "price": 17.25,
     "prescriptionRequired": false
   },
   {
-    "id": 5,
-    "name": "nicip",
-    "stock": 44,
-    "prescriptionRequired": true
+    "id": 1381140,
+    "name": "frida baby FlakeFixer",
+    "stock": 30,
+    "price": 0,
+    "prescriptionRequired": false
   },
   {
-    "id": 6,
-    "name": "viks",
-    "stock": 10,
+    "id": 1383626,
+    "name": "Vitasprint Duo Energie",
+    "stock": 654,
+    "price": 16.95,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 11334,
+    "name": "Bepanthen WUND- UND HEILSALBE, 50 mg/g Salbe",
+    "stock": 54,
+    "price": 7.69,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 1391185,
+    "name": "V-Biotics Flora Complex",
+    "stock": 66,
+    "price": 19.9,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 1403860,
+    "name": "Aveeno Skin Relief Body Lotion",
+    "stock": 33,
+    "price": 14.99,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 1434198,
+    "name": "Centrum Vital+ Mentale Leistung",
+    "stock": 45,
+    "price": 19.95,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 1434864,
+    "name": "Redcare Wundschutzcreme",
+    "stock": 67,
+    "price": 14.39,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 1435154,
+    "name": "Cetaphil Sanft glättende SA Reinigung",
+    "stock": 89,
+    "price": 13.95,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 14176,
+    "name": "Magnesium Verla® N Dragées, magensaftresistente Tabletten",
+    "stock": 87,
+    "price": 6.4,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 704523,
+    "name": "Livocab® direkt Augentropfen, 0,05 % Augentropfen, Suspension",
+    "stock": 65,
+    "price": 14.99,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 185422,
+    "name": "Cetirizin HEXAL® Tropfen bei Allergien, 10 mg/ml Tropfen zum Einnehmen, Lösung",
+    "stock": 43,
+    "price": 13.19,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 198010,
+    "name": "Loperamid akut - 1 A Pharma®, 2 mg Hartkapseln",
+    "stock": 21,
+    "price": 3.93,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 202006,
+    "name": "Ramipril - 1 A Pharma® 10 mg Tabletten",
+    "stock": 12,
+    "price": 12.59,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 306595,
+    "name": "GRANU FINK® femina, Hartkapseln",
+    "stock": 23,
+    "price": 20.29,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 324024,
+    "name": "Vitasprint B12 Kapseln",
+    "stock": 33,
+    "price": 17.04,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 332568,
+    "name": "Sinupret® Saft",
+    "stock": 56,
+    "price": 13.3,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 335765,
+    "name": "Nurofen 200 mg Schmelztabletten Lemon",
+    "stock": 67,
+    "price": 10.98,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 363715,
+    "name": "Vitamin B-Komplex-ratiopharm",
+    "stock": 78,
+    "price": 24.97,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 368333,
+    "name": "Calmvalera Hevert Tropfen",
+    "stock": 89,
+    "price": 35.97,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 1248085,
+    "name": "femiLoges® 4 mg magensaftresistente Tabletten",
+    "stock": 90,
+    "price": 20.44,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 376212,
+    "name": "Umckaloabo® Saft für Kinder",
+    "stock": 0,
+    "price": 13.15,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 368367,
+    "name": "DulcoLax® Dragées, 5 mg magensaftresistente Tabletten",
+    "stock": 0,
+    "price": 22.9,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 717525,
+    "name": "Diclo-ratiopharm Schmerzgel",
+    "stock": 0,
+    "price": 8.89,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 772646,
+    "name": "Minoxidil BIO-H-TIN-Pharma 20 mg/ml Spray zur Anwendung auf der Haut (Kopfhaut), Lösung",
+    "stock": 0,
+    "price": 22.5,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 790415,
+    "name": "Hyaluron-ratiopharm® Augentropfen",
+    "stock": 0,
+    "price": 13.74,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 790661,
+    "name": "FeniHydrocort Creme 0,25 %",
+    "stock": 0,
+    "price": 8.59,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 879236,
+    "name": "Eucerin UreaRepair PLUS Lotion 10%",
+    "stock": 0,
+    "price": 27.75,
+    "prescriptionRequired": false
+  },
+  {
+    "id": 899231,
+    "name": "Vigantolvit 2000 I.E. Vitamin D3",
+    "stock": 0,
+    "price": 17.99,
     "prescriptionRequired": false
   }
 ]

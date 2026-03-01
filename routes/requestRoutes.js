@@ -5,15 +5,35 @@ const router = express.Router();
 
 const requestsFile = path.join(__dirname, '../data/requests.json');
 const medicinesFile = path.join(__dirname, '../data/medicines.json');
+const dataLoader = require('../utils/dataLoader');
 
-// Helper function to read requests
+// Helper function to read requests. Always read stored requests first, then
+// append any imported consumer orders (so patient-submitted requests are
+// preserved and visible even when a consumer order file exists).
 async function readRequests() {
+    let stored = [];
     try {
         const data = await fs.readFile(requestsFile, 'utf8');
-        return JSON.parse(data);
-    } catch (error) {
-        return [];
+        stored = JSON.parse(data);
+    } catch (e) {
+        stored = [];
     }
+
+    try {
+        const consumerOrders = await dataLoader.readConsumerOrders();
+        if (consumerOrders && consumerOrders.length > 0) {
+            const existingIds = new Set(stored.map(r => r.id));
+            consumerOrders.forEach(r => {
+                if (!existingIds.has(r.id)) {
+                    stored.push(r);
+                }
+            });
+        }
+    } catch (e) {
+        // ignore errors from consumer order loading
+    }
+
+    return stored;
 }
 
 // Helper function to write requests
@@ -59,7 +79,9 @@ router.get('/requests/patient/:name', async (req, res) => {
 });
 
 // POST /api/add-request - Submit new medicine request
-// If the requested medicine is in stock, automatically accept and deduct inventory.
+// If medicine is available, automatically accept and deduct stock. Otherwise
+// leave pending for pharmacist review. New or auto-accepted requests are always
+// stored so they appear in pharmacists' view.
 router.post('/add-request', async (req, res) => {
     try {
         const { patientName, medicineName, quantity } = req.body;
